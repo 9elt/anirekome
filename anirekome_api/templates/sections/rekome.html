@@ -1,0 +1,12 @@
+{% load static %}
+<div class="rekomes--container">
+
+    <div class="arrows_container">
+        <p class='hidden load_more loading_more'>LOADING MORE</p>
+        {% include 'snippets/icon_arrows.html' %}
+    </div>
+
+    {% include 'sections/rekomore.html' with rekomes=rekomes %}
+
+
+</div>

@@ -1,0 +1,17 @@
+<header>
+    <div class="header_logo--container">
+        <a href="/">
+        {% include 'snippets/logo_header.html' %}
+        </a>
+    </div>
+    <div class="burger_icon--container {% if 'user_name' not in request.session %}disabled{% endif %}">
+        {% include 'snippets/icon_burger.html' %}
+    </div>
+    <nav class="header_nav" id="nav_bar">
+        
+        {% if 'user_name' in request.session %}
+            {% include 'sections/nav.html' with user_name=request.session.user_name %}
+        {% endif %}
+
+    </nav>
+</header>

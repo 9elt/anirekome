@@ -1,0 +1,47 @@
+{% load static %}
+<script>
+$(document).ready(function() {
+    var clicked = false
+    $('.trash-rekome').off('click').on('click', function(e){
+        if(matchMedia('(pointer:coarse)').matches){
+            if(clicked == false){clicked = true;return;}
+        }
+        clicked = false;
+        e.preventDefault();
+        if(typeof token == 'undefined'){token = '{{ csrf_token }}'};
+        TrashRekome($(this).attr('data-id'), token);
+    });
+});
+</script>
+{% for rekome in rekomes %}
+
+<div class="rekome {% if forloop.counter0 == 0 %}rekome--active{% else %}rekome--next{% endif %} {% if forloop.last %}rekome--last{% endif %} {% if forloop.first %}rekome--first{% endif %}" 
+style="{% if forloop.counter0 != 0 %}visibility: hidden;{% endif %}" 
+data-id="{{ rekome.anime_id }}" >
+    <div class="rekome_image--container">
+        <img class="rekome_image lazyload" data-src="{{ rekome.anime_picture }}">
+        <h2><span class="text_your">EXPECTED</span><br>SCORE<br><span class="expected_score">{{ rekome.score }}</span></h2>
+    </div>
+    <div class="rekome_text--container">
+        <h2>{{ rekome.anime_title |truncatechars:48 }}</h2>
+        <ul class="genre_list anirekome_color">
+            {% for genre in rekome.genres %}
+            <li>{{ genre }}</li>
+            {% endfor %}
+        </ul>
+        <a href="https://myanimelist.net/anime/{{ rekome.anime_id }}" target="_" class="btn mal_btn">open <span>MyAnimeList</span></a>
+        <div class="save_del--container">
+            <span href="" class="trash-rekome" data-id="{{ rekome.anime_id }}">
+                {% include 'snippets/icon_trash.html' %}
+            </span>
+            <a href="" class="disabled">
+                {% include 'snippets/icon_save.html' %}
+            </a>
+            <div class="save_del_icon star_icon disabled" data-id="{{ rekome.anime_id }}" data-score="">
+                {% include 'snippets/icon_stars.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}

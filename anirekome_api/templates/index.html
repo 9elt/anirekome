@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Anime Recommender{% endblock %}
+
+{% block content %}
+
+    {% if 'user_name' in request.session %}
+        {% include 'sections/rekome.html' with rekomes=request.session.rekomes %}
+    {% else %}
+        {% include 'sections/connect.html' %}    
+    {% endif %}
+
+{% endblock %}

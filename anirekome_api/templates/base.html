@@ -1,0 +1,45 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anirekome - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script
+    src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <picture class="background_images--container">
+        <source srcset="{% static 'media/background_image.webp' %}" type="image/webp">
+        <source srcset="{% static 'media/background_image.jpg' %}" type="image/jpeg">
+        <img class="background_image" src="{% static 'media/background_image.jpg' %}" alt="anirekome your anime recommender">
+    </picture>
+
+    {% include 'sections/header.html' %}
+
+    <section id="main_section">
+        {% block content %}
+        {% endblock %}
+    </section>
+
+    <picture class="overlay_images--container">
+        <source srcset="{% static 'media/overlay_image.webp' %}" type="image/webp">
+        <source srcset="{% static 'media/overlay_image.png' %}" type="image/png">
+        <img class="background_image overlay_image" src="{% static 'media/overlay_image.png' %}">
+    </picture>
+
+    {% include 'sections/footer.html' %}
+
+{% if 'user_name' in request.session %}
+<script>$(document).ready(function(){$(window).on('load', NavBar(), Rekome());});</script>
+{% endif %}
+<script src="{% static 'js/lazysizes.min.js' %}" async=""></script>
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

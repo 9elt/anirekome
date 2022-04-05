@@ -1,0 +1,31 @@
+<script>
+$(document).ready(function() {
+    NavBar();
+    if(typeof token == 'undefined'){token = '{{ csrf_token }}'};
+    DisconnectUser(token);
+    RefreshUser(token);
+
+});
+</script>
+
+<div class="navbar_menu--profile">
+    <div class="mal_refresh--container">
+        {% include 'snippets/icon_refresh.html' %}
+        <div class="mal_link--container">
+            <p id="status--message" class="mal_link--label">MyAnimeList</p>
+            <div class="list_link--container">
+                <p class="mal_link mal_disconnect">
+                    {{ user_name }}
+                </p>
+                <div class="user_disconnect--container">
+                    {% include 'snippets/icon_logout.html' %}
+                    <p id="disconnect_user">DISCONNECT</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="user_actions--container">
+ 
+    </div>
+</div>

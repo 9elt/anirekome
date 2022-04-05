@@ -1,0 +1,68 @@
+{% load static %}
+<script>
+$(document).ready(function() {
+    clicked = false;
+    $('#connect_user').off('click').on('click', function(e){
+        if(matchMedia('(pointer:coarse)').matches){
+            if(clicked == false){clicked = true; return;}
+        }
+        clicked = false;
+        if($('#status--message').hasClass('error')){return}
+        if($('#privacy').val() == 0){
+            $('.privacy').addClass('privacy--error');
+            $('.privacy').on('click', function(){$('.privacy').removeClass('privacy--error');});
+            clicked == false;
+            return
+        }
+        e.preventDefault();
+        if(typeof token == 'undefined'){token = '{{ csrf_token }}'};
+        ConnectUser($('#access_key').val(),$('#user_name').val(), $('#ptw').val(), token);
+    });
+});
+</script>
+
+<div class="connect--container">
+
+    <p id='accesskey--message' class="mal_link--label mal_status">Alpha Access Key</p>
+    <div class="list_link--container">
+        <p class="mal_link">
+            <span><input id="access_key" type="text" class="connect_link--input access--input" placeholder="alpha v0.1 access key" autocomplete="off" spellcheck="false"></span>
+        </p>
+        <div class="user_connect--container" style="opacity:0;pointer-events:none;">
+            {% include 'snippets/icon_logout.html' %}
+        </div>
+    </div>
+    <br>
+    <p id='status--message' class="mal_link--label mal_status">MyAnimeList</p>
+    <div class="list_link--container">
+        <p class="mal_link mal_connect">
+            <span><input id="user_name" type="text" class="connect_link--input username--input" placeholder="your MAL user name" autocomplete="off" spellcheck="false"></span>
+        </p>
+        <div id="connect_user" class="user_connect--container" data-section='rekome'>
+            {% include 'snippets/icon_logout.html' %}
+            <p>CONNECT</p>
+        </div>
+    </div>
+    
+    <br><br>
+
+    <div class="rekomeptw--text">
+        <span class="">rekome plan to watch</span>
+        <label class="choice_photo--label">
+            <input id="ptw" type="hidden" value="0"><input type="checkbox" onclick="this.previousSibling.value=1-this.previousSibling.value;">
+            <span></span>
+        </label>
+    </div>
+    <br><br>
+
+    <div class="rekomeptw--text policy--text">
+        <span class="">I've read and accepted the <a href="terms" target="_" style="text-decoration: underline;">terms of service</a> <br>
+            and the <a href="privacy" target="_" style="text-decoration: underline;">privacy policy</a> terms</span>
+        <label class="choice_photo--label">
+            <input id="privacy" type="hidden" value="0"><input type="checkbox" onclick="this.previousSibling.value=1-this.previousSibling.value;">
+            <span class="privacy"></span>
+        </label>
+    </div>
+</div>
+
+
