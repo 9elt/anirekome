@@ -20,8 +20,10 @@ def terms(request):
     return render(request, 'terms.html')
     
 def getRekome(request):
+    if('alphakey' in request.POST and request.POST.get('alphakey') == ALPHA_KEY):
+        request.session['alpha_key'] = request.POST.get('alphakey')
 
-    if('alphakey' not in request.POST or request.POST.get('alphakey') != ALPHA_KEY): 
+    if('alpha_key' not in request.session or request.session['alpha_key'] != ALPHA_KEY):
         response = {'status': 405, 'message' : 'Invalid Access Key'}
         return JsonResponse(response)
 
